@@ -8,6 +8,10 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library(plotly)
+library(dplyr)
+library(httr)
+library(rjson)
 ```
 
 Column {data-width=650}
@@ -16,7 +20,34 @@ Column {data-width=650}
 ### Chart A
 
 ```{r}
-print("hi")
+mySolution <- function(i){
+  dataAPI <- GET("https://s3-ap-southeast-1.amazonaws.com/he-public-data/chart2986176.json")
+
+  df <- as.list(fromJSON(rawToChar(dataAPI$content)))
+  
+  if(df[[i]]$type == 'Pie'){
+      tempdf <- as.data.frame(df[[i]]$elements)
+      fig <- plot_ly(tempdf, labels = ~tempdf$`df[[i]]$elements`, values = ~tempdf$`df[[i]]$elements`, type = 'pie')
+      fig <- fig %>% layout(title = 'Task-1 Interactive Pie Chart ',
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+      fig
+  }
+  
+  if(df[[i]]$type == 'Bar'){
+   tempdf <- as.data.frame(df[[i]]$elements)
+    
+    fig <- plot_ly(y = tempdf$`df[[1]]$elements`,color = tempdf$`df[[1]]$elements`,type = "bar")
+    fig <- fig %>% layout(title = 'Interactive Bar Chart ',
+    xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
+    fig
+  }
+  
+}
+
+mySolution(2)
 
 ```
 
@@ -26,6 +57,20 @@ Column {data-width=350}
 ### Chart B
 
 ```{r}
+dataAPI <- GET("https://s3-ap-southeast-1.amazonaws.com/he-public-data/chart2986176.json")
+
+df <- rawToChar(dataAPI$content)
+df <- as.list(fromJSON(rawToChar(dataAPI$content)))
+
+
+tempdf <- as.data.frame(df[[1]]$elements)
+
+fig <- plot_ly(tempdf, labels = ~tempdf$`df[[1]]$elements`, values = ~tempdf$`df[[1]]$elements`, type = 'pie')
+fig <- fig %>% layout(title = 'Task-1 Interactive Bar Chart ',
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+fig
+
 
 ```
 
