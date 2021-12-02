@@ -1,3 +1,4 @@
 # Clootrack Test-1
 
-Output Link [Link to Google](https://www.google.com)
+You can access the web URL from below link.
+[Link to Project](https://bharatbrijwasi.github.io/test_Clootrack/)
