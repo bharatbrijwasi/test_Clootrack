@@ -16,6 +16,7 @@ Column {data-width=650}
 ### Chart A
 
 ```{r}
+print("hi")
 
 ```
 
