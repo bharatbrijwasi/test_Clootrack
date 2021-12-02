@@ -17,25 +17,23 @@ library(rjson)
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Chart A
+###
+Clootrack hiring Task. I make algorithm that take every data element from your provided API. After that identify graph type and plot the graph like below. Here I take default value for plot.
 
 ```{r}
-mySolution <- function(i){
-  dataAPI <- GET("https://s3-ap-southeast-1.amazonaws.com/he-public-data/chart2986176.json")
 
-  df <- as.list(fromJSON(rawToChar(dataAPI$content)))
+dataAPI <- GET("https://s3-ap-southeast-1.amazonaws.com/he-public-data/chart2986176.json")
+
+df <- as.list(fromJSON(rawToChar(dataAPI$content)))
   
-  if(df[[i]]$type == 'Pie'){
-      tempdf <- as.data.frame(df[[i]]$elements)
-      fig <- plot_ly(tempdf, labels = ~tempdf$`df[[i]]$elements`, values = ~tempdf$`df[[i]]$elements`, type = 'pie')
-      fig <- fig %>% layout(title = 'Task-1 Interactive Pie Chart ',
-                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
-      fig
-  }
+
+
+mySolution <- function(i){
+
   
-  if(df[[i]]$type == 'Bar'){
-   tempdf1 <- as.data.frame(df[[i]]$elements)
+    tempdf <- as.data.frame(df[[i]]$elements)
+
+   if(df[[i]]$type == 'Bar'){
     
     fig <- plot_ly(y = tempdf$`df[[1]]$elements`,color = tempdf$`df[[1]]$elements`,type = "bar")
     fig <- fig %>% layout(title = 'Interactive Bar Chart ',
@@ -43,20 +41,31 @@ mySolution <- function(i){
                       yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
 
     fig
+  }else{
+    tempdf <- as.data.frame(df[[1]]$elements)
+
+    fig <- plot_ly(tempdf, labels = ~tempdf$`df[[1]]$elements`, values = ~tempdf$`df[[1]]$elements`, type = 'pie')
+    fig <- fig %>% layout(title = 'Interactive Pie Chart ',
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+    fig
   }
+  
   
 }
 
-mySolution(4)
+
+mySolution(3)
 
 ```
 
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Chart B
+### Bar Chart
 
 ```{r}
+print("Bar graph for first Element.")
 dataAPI <- GET("https://s3-ap-southeast-1.amazonaws.com/he-public-data/chart2986176.json")
 
 df <- rawToChar(dataAPI$content)
@@ -74,9 +83,10 @@ fig <- plot_ly(y = tempdf$`df[[1]]$elements`,color = tempdf$`df[[1]]$elements`,t
 
 ```
 
-### Chart C
+### Pie Chart
 
 ```{r}
+print("Pie chart")
 dataAPI <- GET("https://s3-ap-southeast-1.amazonaws.com/he-public-data/chart2986176.json")
 
 df <- rawToChar(dataAPI$content)
@@ -86,7 +96,7 @@ df <- as.list(fromJSON(rawToChar(dataAPI$content)))
 tempdf <- as.data.frame(df[[1]]$elements)
 
 fig <- plot_ly(tempdf, labels = ~tempdf$`df[[1]]$elements`, values = ~tempdf$`df[[1]]$elements`, type = 'pie')
-fig <- fig %>% layout(title = 'Interac Pie Chart ',
+fig <- fig %>% layout(title = 'Interactive Pie Chart ',
                       xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
                       yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
 fig
