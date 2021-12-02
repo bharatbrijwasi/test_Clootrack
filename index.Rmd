@@ -35,7 +35,7 @@ mySolution <- function(i){
   }
   
   if(df[[i]]$type == 'Bar'){
-   tempdf <- as.data.frame(df[[i]]$elements)
+   tempdf1 <- as.data.frame(df[[i]]$elements)
     
     fig <- plot_ly(y = tempdf$`df[[1]]$elements`,color = tempdf$`df[[1]]$elements`,type = "bar")
     fig <- fig %>% layout(title = 'Interactive Bar Chart ',
@@ -47,7 +47,7 @@ mySolution <- function(i){
   
 }
 
-mySolution(2)
+mySolution(4)
 
 ```
 
@@ -65,18 +65,31 @@ df <- as.list(fromJSON(rawToChar(dataAPI$content)))
 
 tempdf <- as.data.frame(df[[1]]$elements)
 
-fig <- plot_ly(tempdf, labels = ~tempdf$`df[[1]]$elements`, values = ~tempdf$`df[[1]]$elements`, type = 'pie')
-fig <- fig %>% layout(title = 'Task-1 Interactive Bar Chart ',
-                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+fig <- plot_ly(y = tempdf$`df[[1]]$elements`,color = tempdf$`df[[1]]$elements`,type = "bar")
+    fig <- fig %>% layout(title = 'Interactive Bar Chart ',
+    xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
                       yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
-fig
 
+    fig
 
 ```
 
 ### Chart C
 
 ```{r}
+dataAPI <- GET("https://s3-ap-southeast-1.amazonaws.com/he-public-data/chart2986176.json")
+
+df <- rawToChar(dataAPI$content)
+df <- as.list(fromJSON(rawToChar(dataAPI$content)))
+
+
+tempdf <- as.data.frame(df[[1]]$elements)
+
+fig <- plot_ly(tempdf, labels = ~tempdf$`df[[1]]$elements`, values = ~tempdf$`df[[1]]$elements`, type = 'pie')
+fig <- fig %>% layout(title = 'Interac Pie Chart ',
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+fig
 
 ```
 
